@@ -1,0 +1,74 @@
+<!-- app/views/layouts/admin.html.erb -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - TournamentCommunityHouse</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <style>
+    body.admin-layout {
+      background-color: #f8f9fa;
+    }
+    
+    .admin-sidebar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      padding: 48px 0 0;
+      box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+      background-color: #343a40;
+    }
+    
+    .admin-sidebar .nav-link {
+      color: #adb5bd;
+      padding: 0.75rem 1rem;
+    }
+    
+    .admin-sidebar .nav-link:hover,
+    .admin-sidebar .nav-link.active {
+      color: #fff;
+      background-color: #495057;
+    }
+    
+    .admin-main {
+      margin-left: 240px;
+      padding: 20px;
+    }
+    
+    .admin-navbar {
+      background-color: #212529 !important;
+    }
+  </style>
+</head>
+<body class="admin-layout">
+  <% if admin_signed_in? %>
+    <%= render 'layouts/admin/navbar' %>
+    <%= render 'layouts/admin/sidebar' %>
+  <% end %>
+  
+  <main class="admin-main">
+    <% if notice %>
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <%= notice %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% end %>
+    
+    <% if alert %>
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <%= alert %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% end %>
+    
+    <%= yield %>
+  </main>
+  
+  <%= javascript_include_tag 'application' %>
+</body>
+</html>
