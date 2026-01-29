@@ -1,14 +1,69 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # Devise for Users (public area)
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',
+    passwords: 'users/passwords',
+    unlocks: 'users/unlocks'
+  }
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  devise_for :admins, path: 'admin', controllers: {
+    sessions: 'admins/sessions',
+    registrations: 'admins/registrations',
+    passwords: 'admins/passwords',
+    unlocks: 'admins/unlocks'
+  }
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+  root 'home#index'
+  
+  get 'profile', to: 'users#profile'
+  get 'dashboard', to: 'users#dashboard'
+  
+  namespace :admin do
+    root 'dashboard#index'
+    
+    get 'dashboard', to: 'dashboard#index'
+    
+    # User management
+    resources :users do
+      member do
+        patch :promote_to_organizer
+        patch :promote_to_admin
+        patch :demote_to_player
+      end
+    end
+    
+    # Tournament management
+    resources :tournaments do
+      member do
+        patch :approve
+        patch :reject
+        patch :feature
+        patch :unfeature
+      end
+    end
+    
+    # System settings
+    resources :settings, only: [:index, :update]
+    
+    # Reports
+    get 'reports', to: 'reports#index'
+    get 'analytics', to: 'analytics#index'
+  end
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  # Application resources
+  resources :tournaments do
+    member do
+      post 'register'
+      post 'unregister'
+      get 'bracket'
+      get 'participants'
+    end
+    resources :matches, only: [:show, :index]
+  end
+
+  resources :teams
+  resources :players, only: [:show, :index]
 end
