@@ -1,0 +1,72 @@
+<!-- app/views/layouts/_navbar.html.erb -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <%= link_to root_path, class: 'navbar-brand' do %>
+      <i class="fas fa-trophy me-2"></i>
+      <span class="fw-bold">TournamentCommunityHouse</span>
+    <% end %>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <%= link_to 'Home', root_path, class: "nav-link #{'active' if current_page?(root_path)}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Times', teams_path, class: "nav-link #{'active' if controller_name == 'teams'}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Jogadores', players_path, class: "nav-link #{'active' if controller_name == 'players'}" %>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav">
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <span class="user-avatar-sm bg-primary">
+                <%= current_user.avatar_initials %>
+              </span>
+              <span class="ms-2"><%= current_user.display_name %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <%= link_to profile_path, class: 'dropdown-item' do %>
+                  <i class="fas fa-user me-2"></i>Meu Perfil
+                <% end %>
+              </li>
+              <li>
+                <%= link_to dashboard_path, class: 'dropdown-item' do %>
+                  <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                <% end %>
+              </li>
+              <% if current_user.admin? %>
+                <li>
+                  <%= link_to admin_dashboard_path, class: 'dropdown-item' do %>
+                    <i class="fas fa-crown me-2"></i>Painel Admin
+                  <% end %>
+                </li>
+              <% end %>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= link_to destroy_user_session_path, method: :delete, class: 'dropdown-item text-danger' do %>
+                  <i class="fas fa-sign-out-alt me-2"></i>Sair
+                <% end %>
+              </li>
+            </ul>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Entrar', new_user_session_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Cadastrar', new_user_registration_path, class: 'btn btn-primary ms-2' %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

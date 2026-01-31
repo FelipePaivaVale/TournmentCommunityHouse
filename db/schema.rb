@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_29_022715) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_29_022716) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -34,6 +34,18 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_29_022715) do
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_admins_on_unlock_token", unique: true
+  end
+
+  create_table "lol_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "puuid", null: false
+    t.string "game_name", null: false
+    t.string "tag_line", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_name", "tag_line"], name: "index_lol_profiles_on_game_name_and_tag_line", unique: true
+    t.index ["puuid"], name: "index_lol_profiles_on_puuid", unique: true
+    t.index ["user_id"], name: "index_lol_profiles_on_user_id", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -62,4 +74,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_29_022715) do
     t.index ["summoner_name"], name: "index_users_on_summoner_name", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
+
+  add_foreign_key "lol_profiles", "users"
 end

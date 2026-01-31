@@ -3,6 +3,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :confirmable, :trackable
 
+  # Associations
+  has_one :lol_profile, dependent: :destroy
+
   # Enums
   enum :role, {
     player: 0,

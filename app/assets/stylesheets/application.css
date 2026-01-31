@@ -13,3 +13,341 @@
  *= require_tree .
  *= require_self
  */
+
+// app/assets/stylesheets/application.scss
+
+// Bootstrap
+@import "bootstrap";
+
+// Variáveis de cores do tema
+$primary-color: #0d6efd;
+$secondary-color: #6c757d;
+$success-color: #198754;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$info-color: #0dcaf0;
+$dark-color: #212529;
+$light-color: #f8f9fa;
+
+// Mixins
+@mixin gradient-bg($color1, $color2) {
+  background: linear-gradient(135deg, $color1 0%, $color2 100%);
+}
+
+@mixin card-shadow {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Estilos Gerais
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: $light-color;
+  color: $dark-color;
+}
+
+// Navbar personalizada
+.navbar {
+  @include gradient-bg(darken($dark-color, 10%), $dark-color);
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $primary-color !important;
+    
+    &:hover {
+      color: lighten($primary-color, 10%) !important;
+    }
+  }
+}
+
+// Hero Section
+.hero-section {
+  @include gradient-bg(#1a1a2e, #16213e);
+  color: white;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  
+  .hero-image {
+    .floating-stats {
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      
+      .stat-card {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        min-width: 120px;
+        
+        .stat-number {
+          color: $primary-color;
+          font-weight: bold;
+          margin: 0;
+        }
+        
+        .stat-label {
+          color: $secondary-color;
+          font-size: 0.8rem;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+// Cards personalizados
+.card {
+  @include card-shadow;
+  border: none;
+  border-radius: 12px;
+  overflow: hidden;
+  
+  .card-header {
+    background-color: white;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    font-weight: 600;
+  }
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  
+  .stat-icon {
+    font-size: 2rem;
+    opacity: 0.8;
+  }
+}
+
+// Team Cards
+.team-card {
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  .team-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, $primary-color, $info-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0 auto;
+  }
+}
+
+// Avatar
+.user-avatar-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.user-avatar-lg {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+// Section Titles
+.section-title {
+  position: relative;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: $primary-color;
+    border-radius: 2px;
+  }
+}
+
+// Champion Card
+.champion-card {
+  .champion-logo-placeholder {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, $warning-color, #fd7e14);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2rem;
+    border-radius: 50%;
+    margin: 0 auto;
+  }
+  
+  .champion-prize {
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: 20px;
+    padding: 10px 20px;
+    display: inline-block;
+    margin-top: 15px;
+  }
+}
+
+// Match Preview
+.match-preview {
+  background: white;
+  
+  .vs-label {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: $primary-color;
+  }
+  
+  .team {
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba($primary-color, 0.05);
+  }
+}
+
+// CTA Section
+.cta-card {
+  @include gradient-bg($primary-color, lighten($primary-color, 20%));
+  color: white;
+  position: relative;
+  overflow: hidden;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.5;
+  }
+}
+
+// Badges
+.badge {
+  &.bg-primary { background-color: $primary-color !important; }
+  &.bg-success { background-color: $success-color !important; }
+  &.bg-warning { background-color: $warning-color !important; }
+  &.bg-danger { background-color: $danger-color !important; }
+  &.bg-info { background-color: $info-color !important; }
+}
+
+// Botões
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  
+  &.btn-primary {
+    @include gradient-bg($primary-color, lighten($primary-color, 10%));
+    border: none;
+    
+    &:hover {
+      @include gradient-bg(lighten($primary-color, 5%), lighten($primary-color, 15%));
+    }
+  }
+  
+  &.btn-lg {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+// Dashboard específico
+.dashboard {
+  .stat-card {
+    border-left: 4px solid $primary-color;
+    
+    &.card-success { border-left-color: $success-color; }
+    &.card-warning { border-left-color: $warning-color; }
+    &.card-info { border-left-color: $info-color; }
+  }
+}
+
+// Footer
+footer {
+  a {
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: white !important;
+    }
+  }
+  
+  .social-links {
+    a {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .hero-section {
+    .floating-stats {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      margin-top: 20px;
+    }
+  }
+  
+  .dashboard-header {
+    text-align: center;
+    
+    .text-md-end {
+      text-align: center !important;
+      margin-top: 1rem;
+    }
+  }
+}
+
+// Animações
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}

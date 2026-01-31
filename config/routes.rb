@@ -35,15 +35,7 @@ Rails.application.routes.draw do
       end
     end
     
-    # Tournament management
-    resources :tournaments do
-      member do
-        patch :approve
-        patch :reject
-        patch :feature
-        patch :unfeature
-      end
-    end
+    
     
     # System settings
     resources :settings, only: [:index, :update]
@@ -53,16 +45,6 @@ Rails.application.routes.draw do
     get 'analytics', to: 'analytics#index'
   end
 
-  # Application resources
-  resources :tournaments do
-    member do
-      post 'register'
-      post 'unregister'
-      get 'bracket'
-      get 'participants'
-    end
-    resources :matches, only: [:show, :index]
-  end
 
   resources :teams
   resources :players, only: [:show, :index]

@@ -1,0 +1,205 @@
+<!-- app/views/dashboard/index.html.erb -->
+<div class="dashboard">
+  <!-- Header do Dashboard -->
+  <div class="dashboard-header mb-4">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1 class="h2 mb-1">
+          <i class="fas fa-tachometer-alt me-2"></i>
+          Dashboard
+        </h1>
+        <p class="text-muted mb-0">Bem-vindo de volta, <%= current_user.display_name %>!</p>
+      </div>
+      <div class="col-md-4 text-md-end">
+        <%= link_to 'Editar Perfil', edit_user_registration_path, class: 'btn btn-outline-secondary' %>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="stat-card card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="stat-icon">
+              <i class="fas fa-trophy text-primary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="stat-card card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Partidas</h6>
+              <h3 class="mb-0"><%= @user_stats[:matches_played] %></h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-gamepad text-success"></i>
+            </div>
+          </div>
+          <small class="text-primary">
+            Win Rate: <%= @user_stats[:win_rate] %>%
+          </small>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="stat-card card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Times</h6>
+              <h3 class="mb-0"><%= current_user.teams.count %></h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-users text-info"></i>
+            </div>
+          </div>
+          <small>
+            <%= current_user.teams.where(status: :active).count %> ativos
+          </small>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+      <div class="stat-card card h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h6 class="text-muted mb-1">Ranking</h6>
+              <h3 class="mb-0">#<%= rand(100..1000) %></h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-chart-line text-warning"></i>
+            </div>
+          </div>
+          <small class="text-success">
+            <i class="fas fa-arrow-up me-1"></i>
+            <%= rand(1..50) %> posições
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Conteúdo Principal -->
+  <div class="row">
+    <!-- Coluna Esquerda -->
+    <div class="col-lg-8">
+      <!-- Torneios Ativos -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="fas fa-running me-2"></i>
+            Meus Torneios Ativos
+          </h5>
+        </div>
+        <div class="card-body">
+          
+        </div>
+      </div>
+      
+     
+    </div>
+    
+    <!-- Coluna Direita -->
+    <div class="col-lg-4">
+      <!-- Perfil Rápido -->
+      <div class="card mb-4">
+        <div class="card-body text-center">
+          <div class="user-avatar-lg bg-primary mx-auto mb-3">
+            <%= current_user.avatar_initials %>
+          </div>
+          <h5><%= current_user.display_name %></h5>
+          <p class="text-muted">
+            <i class="fas fa-gamepad me-1"></i>
+            <%= current_user.summoner_name || 'Sem summoner' %>
+          </p>
+          
+          <div class="role-badge mb-3">
+            <span class="badge bg-<%= current_user.admin? ? 'danger' : (current_user.organizer? ? 'warning' : 'info') %>">
+              <i class="fas fa-<%= current_user.admin? ? 'crown' : (current_user.organizer? ? 'user-tie' : 'user') %> me-1"></i>
+              <%= current_user.role_i18n %>
+            </span>
+          </div>
+          
+          <div class="d-grid gap-2">
+            <%= link_to 'Ver Perfil Completo', profile_path, class: 'btn btn-outline-primary' %>
+            <%= link_to 'Configurações', edit_user_registration_path, class: 'btn btn-outline-secondary' %>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Times -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="fas fa-users me-2"></i>
+            Meus Times
+          </h5>
+        </div>
+        <div class="card-body">
+          <% if @user_teams.any? %>
+            <% @user_teams.each do |team| %>
+              <div class="team-item d-flex align-items-center mb-3">
+                <div class="team-logo-sm me-3">
+                  <% if team.logo_url.present? %>
+                    <%= image_tag team.logo_url, class: 'rounded-circle', style: 'width: 40px; height: 40px;' %>
+                  <% else %>
+                    <div class="team-logo-sm-placeholder rounded-circle">
+                      <%= team.tag.first(2) %>
+                    </div>
+                  <% end %>
+                </div>
+                <div class="team-info flex-grow-1">
+                  <h6 class="mb-0"><%= team.name %></h6>
+                  <small class="text-muted">[<%= team.tag %>]</small>
+                </div>
+                <%= link_to 'Ver', team, class: 'btn btn-sm btn-outline-primary' %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-muted text-center mb-3">Você não está em nenhum time</p>
+            <%= link_to 'Criar Time', new_team_path, class: 'btn btn-sm btn-primary w-100' %>
+          <% end %>
+        </div>
+      </div>
+      
+      <!-- Conquistas -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">
+            <i class="fas fa-medal me-2"></i>
+            Conquistas
+          </h5>
+        </div>
+        <div class="card-body">
+          <% @achievements.each do |achievement| %>
+            <div class="achievement-item d-flex align-items-center mb-3">
+              <div class="achievement-icon me-3">
+                <i class="fas fa-<%= achievement[:icon] %> fa-2x <%= achievement[:unlocked] ? 'text-warning' : 'text-muted' %>"></i>
+              </div>
+              <div class="achievement-info flex-grow-1">
+                <h6 class="mb-0"><%= achievement[:name] %></h6>
+                <div class="progress" style="height: 5px;">
+                  <div class="progress-bar <%= achievement[:unlocked] ? 'bg-success' : 'bg-secondary' %>" 
+                       style="width: <%= achievement[:progress] %>%;"></div>
+                </div>
+              </div>
+              <% if achievement[:unlocked] %>
+                <i class="fas fa-check text-success"></i>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
