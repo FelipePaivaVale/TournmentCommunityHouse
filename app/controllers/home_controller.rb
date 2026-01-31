@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     @query = params[:q].strip
     
     unless @query.present? && @query.include?('#')
-      flash.now[:alert] = "Formato inválido. Use: Nome#Tag (ex: isinha#0302)"
+      flash.now[:alert] = "Formato inválido. Use: Nome#Tag"
       render :index
       return
     end
@@ -22,18 +22,33 @@ class HomeController < ApplicationController
     end
 
     begin
-      account_data = RiotApi::AccountService.get_account_by_riot_id(game_name, tag_line)
+      Rails.logger.info("Searching for LOL profile: #{game_name}##{tag_line}")
       
-      @lol_profile = LolProfile.find_or_create_by!(
-        puuid: account_data[:puuid]
-      ) do |profile|
-        profile.game_name = account_data[:game_name]
-        profile.tag_line = account_data[:tag_line]
-      end
+      # Busca conta na API da Riot
+      account_data = RiotApi::AccountService.get_account_by_riot_id(game_name, tag_line)
+      Rails.logger.info("Account Data: #{account_data.inspect}")
+      
+      # Busca dados do summoner
+      summoner_data = RiotApi::SummonerService.get_summoner_by_puuid(account_data[:puuid])
+      Rails.logger.info("Summoner Data: #{summoner_data.inspect}")
+      
+      # Busca dados de ranked
+      @ranked_data = RiotApi::LeagueService.get_ranked_data(account_data[:puuid])
+      Rails.logger.info("Ranked Data: #{@ranked_data.inspect}")
+      
+      @player_info = {
+        game_name: account_data[:game_name],
+        tag_line: account_data[:tag_line],
+        puuid: account_data[:puuid],
+        profile_icon_id: summoner_data[:profile_icon_id],
+        summoner_level: summoner_data[:summoner_level]
+      }
 
       render :profile_result
     rescue StandardError => e
-      flash.now[:alert] = e.message
+      Rails.logger.error("Error searching for LOL profile: #{e.class} - #{e.message}")
+      Rails.logger.error(e.backtrace.join("\n"))
+      flash.now[:alert] = "Erro ao buscar perfil: #{e.message}"
       render :index
     end
   end

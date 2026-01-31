@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module RiotApi
   class AccountService
     BASE_URL = ENV.fetch('RIOT_API_BASE_URL', 'https://americas.api.riotgames.com')
@@ -10,17 +8,21 @@ module RiotApi
     end
 
     def get_account_by_riot_id(game_name, tag_line)
-      url = "#{BASE_URL}/riot/account/v1/accounts/by-riot-id/#{game_name}/#{tag_line}"
+        encoded_game_name = game_name.gsub(' ', '%20')
+        encoded_tag_line = tag_line.gsub(' ', '%20')
+        Rails.logger.info("Fetching account for #{game_name}##{tag_line}")
+        Rails.logger.info("Encoded URL components: #{encoded_game_name}, #{encoded_tag_line}")
+        url = "#{BASE_URL}/riot/account/v1/accounts/by-riot-id/#{encoded_game_name}/#{encoded_tag_line}"
       
-      response = fetch(url)
+        response = fetch(url)
       
-      {
-        puuid: response['puuid'],
-        game_name: response['gameName'],
-        tag_line: response['tagLine']
-      }
+        {
+            puuid: response['puuid'],
+            game_name: response['gameName'],
+            tag_line: response['tagLine']
+        }
     rescue StandardError => e
-      raise "Erro ao buscar conta na Riot API: #{e.message}"
+        raise "Erro ao buscar conta na Riot API: #{e.message}"
     end
 
     private
