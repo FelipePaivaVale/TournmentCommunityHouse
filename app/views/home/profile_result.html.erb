@@ -1,0 +1,353 @@
+<div class="profile-result-container">
+  <div class="container">
+    <div class="row justify-content-center mt-5 pt-5">
+      <div class="col-lg-8 col-md-10">
+        
+        <div class="mb-4">
+          <%= link_to "← Voltar para busca", root_path, class: "btn btn-outline-primary btn-sm" %>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <div class="avatar-placeholder">
+                <%= @lol_profile.game_name[0].upcase %>
+              </div>
+            </div>
+            <div class="profile-info-header">
+              <h1 class="profile-name">
+                <%= @lol_profile.game_name %>
+                <span class="profile-tag">#<%= @lol_profile.tag_line %></span>
+              </h1>
+              <p class="profile-puuid text-muted">
+                PUUID: <code><%= @lol_profile.puuid[0..8] %>...</code>
+              </p>
+            </div>
+          </div>
+
+          <!-- Stats Section -->
+          <div class="profile-stats mt-4">
+            <div class="stat-item">
+              <div class="stat-label">Tipo de Conta</div>
+              <div class="stat-value">
+                <span class="badge bg-primary">Invocador</span>
+              </div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Região</div>
+              <div class="stat-value">BR</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Cadastrado em</div>
+              <div class="stat-value">
+                <%= @lol_profile.created_at.strftime("%d/%m/%Y") %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="profile-actions mt-5">
+            <% if user_signed_in? && current_user.lol_profile&.puuid == @lol_profile.puuid %>
+              <p class="alert alert-success">
+                ✓ Este é seu perfil LOL
+              </p>
+            <% elsif user_signed_in? %>
+              <button class="btn btn-lg btn-primary w-100" data-bs-toggle="modal" data-bs-target="#linkProfileModal">
+                Vincular com Minha Conta
+              </button>
+            <% else %>
+              <p class="alert alert-info mb-0">
+                <%= link_to "Faça login para vincular este perfil", new_user_session_path, class: "alert-link" %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="mt-4 text-center text-muted">
+          <small>
+            Perfil sincronizado com Riot Games API em <%= @lol_profile.updated_at.strftime("%d/%m/%Y às %H:%M") %>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if user_signed_in? && !current_user.lol_profile.present? %>
+  <div class="modal fade" id="linkProfileModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Vincular Perfil LOL</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja vincular <strong><%= @lol_profile.game_name %>#<%= @lol_profile.tag_line %></strong> com sua conta?</p>
+          <p class="text-muted small">Esta ação não pode ser desfeita facilmente.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <%= button_to "Vincular", 
+              link_lol_profile_path(@lol_profile), 
+              method: :post,
+              class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+
+/* Estilos para a página de resultado do perfil */
+
+.profile-result-container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.profile-avatar {
+  flex-shrink: 0;
+}
+
+.avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.profile-info-header {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-tag {
+  color: #667eea;
+  font-weight: 500;
+  font-size: 1.8rem;
+}
+
+.profile-puuid {
+  font-size: 0.9rem;
+}
+
+.profile-puuid code {
+  background: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: #764ba2;
+}
+
+/* Stats Section */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  border: 1px solid #eaeaea;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stat-value .badge {
+  font-size: 0.9rem;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 15px 15px 0 0;
+  padding: 20px 30px;
+}
+
+.modal-title {
+  font-weight: 600;
+}
+
+.modal-body {
+  padding: 30px;
+}
+
+.modal-footer {
+  padding: 20px 30px;
+  border-top: 1px solid #eaeaea;
+}
+
+/* Alert Styles */
+.alert {
+  border-radius: 12px;
+  border: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  color: #155724;
+}
+
+.alert-info {
+  background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+  color: #0c5460;
+}
+
+.alert-link {
+  font-weight: 600;
+  text-decoration: none;
+  color: #764ba2 !important;
+}
+
+.alert-link:hover {
+  text-decoration: underline;
+}
+
+/* Botões */
+.btn-outline-primary {
+  border: 2px solid #667eea;
+  color: #667eea;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  font-weight: 600;
+  padding: 15px 40px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .avatar-placeholder {
+    width: 100px;
+    height: 100px;
+    font-size: 36px;
+  }
+  
+  .profile-name {
+    font-size: 2rem;
+  }
+  
+  .profile-stats {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  
+  .profile-card {
+    padding: 25px;
+    margin: 0 15px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+/* Animação de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+</style>

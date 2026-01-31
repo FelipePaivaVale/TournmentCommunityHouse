@@ -25,13 +25,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def after_sign_in_path_for(resource)
     # Redireciona baseado no tipo de usuário
-    if resource.admin?
-      admin_dashboard_path
-    elsif resource.organizer?
-      tournaments_path
-    else
-      root_path
-    end
+    root_path
   end
 
   def after_sign_out_path_for(resource_or_scope)

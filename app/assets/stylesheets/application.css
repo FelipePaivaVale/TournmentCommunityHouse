@@ -351,3 +351,104 @@ footer {
 .fade-in {
   animation: fadeIn 0.5s ease-out;
 }
+.search-hero-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-hero-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,218.7C672,235,768,245,864,224C960,203,1056,149,1152,128C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom no-repeat;
+  background-size: cover;
+}
+
+.search-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.search-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input-wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.input-group.input-group-lg {
+  height: 60px;
+}
+
+.search-input {
+  height: 60px;
+  border-radius: 12px 0 0 12px !important;
+  border: none;
+  font-size: 1.1rem;
+  padding-left: 25px;
+  background: rgba(255, 255, 255, 0.95);
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  background: white;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+  border: none;
+}
+
+.btn-search {
+  height: 60px;
+  border-radius: 0 12px 12px 0 !important;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0 40px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.text-white {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.lead.text-light {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .search-input-wrapper {
+    padding: 25px;
+    margin: 0 15px;
+  }
+  
+  .input-group.input-group-lg {
+    height: 50px;
+  }
+  
+  .search-input, .btn-search {
+    height: 50px;
+    font-size: 1rem;
+  }
+}

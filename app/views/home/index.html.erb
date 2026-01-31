@@ -1,0 +1,35 @@
+<div class="search-hero-container">
+  <div class="search-hero-content">
+    <div class="container">
+      <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-lg-8 col-md-10">
+          <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold mb-3 text-white">
+              Buscar Invocador
+            </h1>
+            <p class="lead text-light opacity-75">
+              Digite seu nome e tag para encontrar seu perfil
+            </p>
+          </div>
+
+          <%= form_with local: true, method: :get, url: search_path, class: "search-form" do |f| %>
+            <div class="search-input-wrapper">
+              <div class="input-group input-group-lg">
+                <%= f.text_field :q, 
+                    class: "form-control search-input",
+                    placeholder: "Nome#Tag",
+                    autocomplete: "off",
+                    required: true %>
+                <%= f.submit "Buscar", class: "btn btn-primary btn-search" %>
+              </div>
+              <small class="d-block text-center mt-3 text-light">
+                Digite seu nome de invocador seguido por # e sua tag
+              </small>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

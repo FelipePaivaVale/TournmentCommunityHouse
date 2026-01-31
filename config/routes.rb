@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
   
+  get 'search', to: 'home#search'
+  post 'lol_profiles/:id/link', to: 'lol_profiles#link', as: 'link_lol_profile'
   get 'profile', to: 'users#profile'
   get 'dashboard', to: 'users#dashboard'
   
