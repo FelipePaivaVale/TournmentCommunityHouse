@@ -1,0 +1,101 @@
+<div class="match-card <%= match[:win] ? 'match-win' : 'match-loss' %>">
+  <div class="match-info">
+    <div class="match-mode">
+      <%= match[:game_mode] %>
+    </div>
+    <div class="match-duration">
+      <i class="fas fa-clock"></i> <%= match[:game_duration] %>
+    </div>
+    <div class="match-date">
+      <%= time_ago_in_words(match[:game_creation]) %> atrás
+    </div>
+  </div>
+  
+  <div class="champion-info">
+    <div class="champion-icon">
+      <%= image_tag RiotApi::MatchService.get_champion_image_url(match[:champion_name]),
+          class: "champion-image",
+          alt: match[:champion_name] %>
+      <div class="champion-level">
+        <i class="fas fa-star"></i> <%= match[:champ_level] %>
+      </div>
+    </div>
+    <div class="champion-name">
+      <%= match[:champion_name] %>
+    </div>
+  </div>
+  
+  <div class="kda-stats">
+    <div class="kda-numbers">
+      <span class="kills"><%= match[:kills] %></span>
+      <span class="separator">/</span>
+      <span class="deaths <%= match[:deaths] > 8 ? 'text-danger' : '' %>"><%= match[:deaths] %></span>
+      <span class="separator">/</span>
+      <span class="assists"><%= match[:assists] %></span>
+    </div>
+    <div class="kda-ratio">
+      <span class="ratio-label">KDA:</span>
+      <span class="ratio-value <%= match[:kda] > 3 ? 'text-success' : match[:kda] < 1.5 ? 'text-warning' : '' %>">
+        <%= match[:kda] %>
+      </span>
+    </div>
+    <div class="multi-kill-badge">
+    <% if match[:pentaKills]> 0 %>
+      <span class="badge bg-penta">PENTA KILL</span>
+    <% elsif match[:quadraKills] > 0 %>
+      <span class="badge bg-quadra">QUADRA KILL</span>
+    <% elsif match[:tripleKills] > 0 %>
+      <span class="badge bg-triple">TRIPLE KILL</span>
+    <% elsif match[:doubleKills] > 0 %>
+      <span class="badge bg-double">DOUBLE KILL</span>
+    <% end %>
+    </div>
+  </div>
+  
+  <div class="additional-stats">
+    <div class="stat-item">
+      <div class="stat-label">CS</div>
+      <div class="stat-value"><%= match[:cs] %></div>
+      <div class="stat-sub"><%= match[:cs_per_min] %>/min</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">OURO</div>
+      <div class="stat-value"><%= number_with_delimiter(match[:gold_earned]) %></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">VISÃO</div>
+      <div class="stat-value"><%= match[:vision_score] %></div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">DANO</div>
+      <div class="stat-value"><%= number_with_delimiter(match[:damage_dealt]) %></div>
+    </div>
+  </div>
+  
+  <div class="build-items">
+    <div class="items-grid">
+      <% match[:items].each_with_index do |item_id, index| %>
+        <% if item_id > 0 %>
+          <div class="item-slot slot-<%= index %>">
+            <%= image_tag RiotApi::MatchService.get_item_image_url(item_id),
+                class: "item-image",
+                alt: "Item #{index + 1}" %>
+          </div>
+        <% else %>
+          <div class="item-slot slot-<%= index %> empty">
+            <div class="item-placeholder"></div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="summoner-spells">
+      <% match[:summoner_spells].each do |spell_id| %>
+        <div class="spell-slot">
+          <%= image_tag RiotApi::MatchService.get_spell_image_url(spell_id),
+              class: "spell-image",
+              alt: "Spell" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

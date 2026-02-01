@@ -981,3 +981,380 @@ footer {
     margin: 0 10px;
   }
 }
+
+
+/* Estilos para Histórico de Partidas */
+.match-history-section {
+  margin-top: 50px;
+}
+
+/* Card de Partida */
+.match-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  display: grid;
+  grid-template-columns: 100px 150px 120px 150px 200px auto;
+  gap: 20px;
+  align-items: center;
+  border-left: 5px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.match-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+
+.match-win {
+  border-left-color: #00ff3c;
+  background: rgba(40, 167, 69, 0.25);
+}
+
+.match-loss {
+  border-left-color: #ff0019;
+  background: rgba(220, 53, 69, 0.25);
+}
+
+/* Resultado da Partida */
+.match-result-badge {
+  text-align: center;
+}
+
+.match-result-badge .badge {
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.bg-victory {
+  background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%) !important;
+  color: white;
+}
+
+.bg-defeat {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+  color: white;
+}
+
+/* Informações da Partida */
+.match-info {
+  text-align: center;
+}
+
+.match-mode {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.match-duration {
+  color: #666;
+  font-size: 0.85rem;
+  margin-bottom: 3px;
+}
+
+.match-date {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+/* Informações do Campeão */
+.champion-info {
+  text-align: center;
+}
+
+.champion-icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 8px;
+}
+
+.champion-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #667eea;
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+}
+
+.champion-level {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  background: #764ba2;
+  color: white;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border: 2px solid white;
+}
+
+.champion-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+  margin-bottom: 3px;
+}
+
+.lane-role {
+  color: #666;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+/* Estatísticas KDA */
+.kda-stats {
+  text-align: center;
+}
+
+.kda-numbers {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.kda-numbers .kills {
+  color: #28a745;
+}
+
+.kda-numbers .deaths {
+  color: #dc3545;
+}
+
+.kda-numbers .assists {
+  color: #17a2b8;
+}
+
+.kda-numbers .separator {
+  color: #666;
+  margin: 0 3px;
+}
+
+.kda-ratio {
+  font-size: 0.9rem;
+}
+
+.ratio-label {
+  color: #666;
+}
+
+.ratio-value {
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+/* Badges de Multi Kill */
+.multi-kill-badge {
+  margin-top: 5px;
+}
+
+.multi-kill-badge .badge {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.bg-penta {
+  background: linear-gradient(135deg, #ffd700 0%, #ff9800 100%) !important;
+  color: #333;
+}
+
+.bg-quadra {
+  background: linear-gradient(135deg, #9966cc 0%, #663399 100%) !important;
+  color: white;
+}
+
+.bg-triple {
+  background: linear-gradient(135deg, #00bfff 0%, #0066cc 100%) !important;
+  color: white;
+}
+
+.bg-double {
+  background: linear-gradient(135deg, #50c878 0%, #228b22 100%) !important;
+  color: white;
+}
+
+/* Estatísticas Adicionais */
+.additional-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 8px;
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 2px;
+}
+
+.stat-sub {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* Build e Itens */
+.build-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 30px);
+  gap: 5px;
+}
+
+.item-slot {
+  width: 30px;
+  height: 30px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.item-slot.empty {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.summoner-spells {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.spell-slot {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.spell-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botão Carregar Mais */
+.btn-load-more {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-load-more:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  color: white;
+}
+
+/* Mensagem Sem Partidas */
+.no-matches-message {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.no-matches-message i {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .match-card {
+    grid-template-columns: 80px 130px 110px 140px 180px auto;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .match-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .champion-icon {
+    margin: 0 auto 8px;
+  }
+  
+  .additional-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .items-grid {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .match-card {
+    padding: 15px;
+  }
+  
+  .additional-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .items-grid {
+    grid-template-columns: repeat(4, 25px);
+  }
+  
+  .item-slot {
+    width: 25px;
+    height: 25px;
+  }
+}

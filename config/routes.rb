@@ -1,6 +1,5 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  # Devise for Users (public area)
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
@@ -22,7 +21,8 @@ Rails.application.routes.draw do
   post 'lol_profiles/:id/link', to: 'lol_profiles#link', as: 'link_lol_profile'
   get 'profile', to: 'users#profile'
   get 'dashboard', to: 'users#dashboard'
-  
+  get 'load_more_matches', to: 'home#load_more_matches'
+
   namespace :admin do
     root 'dashboard#index'
     
